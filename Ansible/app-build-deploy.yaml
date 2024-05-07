@@ -1,0 +1,30 @@
+# ci_cd_pipeline.yml
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  REPO_URL: "https://github.com/your/repository.git"
+  BUILD_SERVER: "build_server"
+  TEST_SERVER: "test_server"
+  PRODUCTION_SERVER: "production_server"
+  APP_PATH: "/path/to/app"
+  TEST_SCRIPT: "/path/to/app/tests.sh"
+  DEPLOY_SCRIPT: "/path/to/app/deploy.sh"
+
+build:
+  stage: build
+  script:
+    - ansible-playbook build.yml
+
+test:
+  stage: test
+  script:
+    - ansible-playbook test.yml
+
+deploy:
+  stage: deploy
+  script:
+    - ansible-playbook deploy.yml
