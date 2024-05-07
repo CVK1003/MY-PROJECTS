@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an AWS Glue database
+
+Parameters:
+  GlueDatabaseName:
+    Type: String
+    Description: Name for the Glue database
+
+Resources:
+  GlueDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      DatabaseInput:
+        Name: !Ref GlueDatabaseName
