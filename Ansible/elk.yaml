@@ -1,0 +1,57 @@
+---
+- name: Install ELK Stack
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Java
+      yum:
+        name: java-11-openjdk
+        state: present
+
+    - name: Add Elastic GPG Key
+      rpm_key:
+        state: present
+        key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+    - name: Add Elastic Repository
+      yum_repository:
+        name: elastic
+        description: Elastic repository for 7.x packages
+        baseurl: https://artifacts.elastic.co/packages/7.x/yum
+        gpgcheck: yes
+        gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        enabled: yes
+        state: present
+
+    - name: Install Elasticsearch
+      yum:
+        name: elasticsearch
+        state: present
+
+    - name: Install Logstash
+      yum:
+        name: logstash
+        state: present
+
+    - name: Install Kibana
+      yum:
+        name: kibana
+        state: present
+
+    - name: Start Elasticsearch
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+
+    - name: Start Logstash
+      service:
+        name: logstash
+        state: started
+        enabled: yes
+
+    - name: Start Kibana
+      service:
+        name: kibana
+        state: started
+        enabled: yes
